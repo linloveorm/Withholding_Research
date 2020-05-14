@@ -16,7 +16,7 @@ from pythainlp.util import collate
 
 
 
-text = "ร้านนี้บริการลูกค้าดีจัง"
+text = "ร้านนี้บริการลูกค้าดีจัง While I eat fish ตี่ตี๋เป็นแมวของเจ"
 text2 =  "การบริการที่ดี ควรบริการมาจากใจ"
 
 text_cutting = word_tokenize(text, engine = "deepcut")
