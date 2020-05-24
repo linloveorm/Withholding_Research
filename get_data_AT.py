@@ -107,20 +107,102 @@ for i in range(len(record_item)):
                 # print("Payable: "+account_payable[itr]['id'])
                 # payable_data.append([account_payable[itr]['fields']['Name'],account_payable[itr]['fields']['Payable ID']])
             
-                arr_cutting.append([i,record_item[i]['fields']['Category'],record_item[i]['id'],word_cutting,request_cutting,inv_amount,bf_vat,vat,pay_amount,withholding,percentage,[account_payable[itr]['fields']['Name'],account_payable[itr]['fields']['Payable ID']]]) #Append data to the new list
+                arr_cutting.append([i,record_item[i]['fields']['Category'],record_item[i]['id'],pos_tag(word_cutting,engine='unigram',corpus='pud'),pos_tag(request_cutting,engine='unigram',corpus='pud'),inv_amount,bf_vat,vat,pay_amount,withholding,percentage,[account_payable[itr]['fields']['Name'],account_payable[itr]['fields']['Payable ID']]]) #Append data to the new list
 
                 # print(payable_data)
                  
         
         # arr_cutting.append([record_item[i]['id'],word_cutting,record_item[i]['fields']['THB Invoice Amount'],record_item[i]['fields']['Tax Withholding Amount'],payable_data])
 
+# print(arr_cutting)
+
+wth = []
 i = 0
+itr = 0
+verb = []
+count = 0
+index_wth = 0 
+keyword = []
 for i in range(len(arr_cutting)):
+    count = 0
+    # print("percentage : "+str(arr_cutting[i][10]))
+    if arr_cutting[i][10] not in wth:
+        wth.append(arr_cutting[i][10])
+        verb.append([])
+    verb[wth.index(arr_cutting[i][10])].append([])
+    sentenceIndex = len(verb[wth.index(arr_cutting[i][10])]) - 1
+    # print("index : "+str(wth.index(arr_cutting[i][10])))
+    # print("len : "+str(len(verb[wth.index(arr_cutting[i][10])])))
+    for itr in range(len(arr_cutting[i][3])):
+        
+        if arr_cutting[i][3][itr][1] == 'VERB':
+            
+            count += 1  
+            verb[wth.index(arr_cutting[i][10])][sentenceIndex].append([count,itr,arr_cutting[i][3][itr][0],arr_cutting[i][3][itr][1],arr_cutting[i][10],i])
+            
+        else:
+            pass
+       
+            
+            
+    
+# print(verb)
+    
 
-    if arr_cutting[i][10] != 5.0 and arr_cutting[i][10] != 3.0 and arr_cutting[i][10] != 2.0:
-        print(str(i)+":")
-        print(arr_cutting[i])
+        
 
+
+i = 0
+itr = 0 
+ite = 0
+ind = 0
+
+for i in range(len(verb)):
+  
+    for itr in range(len(verb[i])):
+        if len(verb[i][itr]) > 1:
+            for ind in range(len(verb[i][itr])):
+                if ind == 0:                                 
+                    for n in range(len(arr_cutting)):
+                        if verb[i][itr][ind][5] == n:
+                            print(arr_cutting[n][3])
+                # print("ind: "+str(ind))
+                print(str(ind)+":"+str(verb[i][itr][ind]))
+            
+                
+            print("Choose the keyword number :")
+            num = input()
+            for ite in range(len(verb[i][itr])):
+                print("num : "+str(num))
+                print("ite : "+str(ite))
+                if ite == int(num):
+                    keyword += verb[i][itr][int(num)] 
+                    print(verb[i][itr][int(num)])
+                else:
+                    print("error")
+                
+                    
+
+        else:
+            keyword += verb[i]
+
+
+    print("Keyword "+str(i)+":")
+    print(keyword[i])
+
+print(keyword)
+
+
+
+
+
+
+
+    # if arr_cutting[i][10] != 5.0 and arr_cutting[i][10] != 3.0 and arr_cutting[i][10] != 2.0:
+    #     if arr_cutting[i]
+    # #     print(str(i)+":")
+    # #     print(arr_cutting[i])
+# print(arr_cutting[0][4][0][1])
 # print(str(len(account_payable))+" ID[0]: "+account_payable[0]['id'])
 # print("arr 189: ")
 # print(arr_cutting[189])
