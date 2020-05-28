@@ -107,7 +107,7 @@ for i in range(len(record_item)):
                 # print("Payable: "+account_payable[itr]['id'])
                 # payable_data.append([account_payable[itr]['fields']['Name'],account_payable[itr]['fields']['Payable ID']])
             
-                arr_cutting.append([i,record_item[i]['fields']['Category'],record_item[i]['id'],pos_tag(word_cutting,engine='unigram',corpus='pud'),pos_tag(request_cutting,engine='unigram',corpus='pud'),inv_amount,bf_vat,vat,pay_amount,withholding,percentage,[account_payable[itr]['fields']['Name'],account_payable[itr]['fields']['Payable ID']]]) #Append data to the new list
+                arr_cutting.append([i,record_item[i]['fields']['Category'],record_item[i]['id'],pos_tag(word_cutting, engine='unigram', corpus='pud'),pos_tag(request_cutting, engine='unigram', corpus='pud'),inv_amount,bf_vat,vat,pay_amount,withholding,percentage,[account_payable[itr]['fields']['Name'],account_payable[itr]['fields']['Payable ID']]]) #Append data to the new list
 
                 # print(payable_data)
                  
@@ -156,6 +156,7 @@ i = 0
 itr = 0 
 ite = 0
 ind = 0
+check = False
 
 for i in range(len(verb)):
   
@@ -165,6 +166,7 @@ for i in range(len(verb)):
                 if ind == 0:                                 
                     for n in range(len(arr_cutting)):
                         if verb[i][itr][ind][5] == n:
+                            print("full sentence: ")
                             print(arr_cutting[n][3])
                 # print("ind: "+str(ind))
                 print(str(ind)+":"+str(verb[i][itr][ind]))
@@ -173,22 +175,25 @@ for i in range(len(verb)):
             print("Choose the keyword number :")
             num = input()
             for ite in range(len(verb[i][itr])):
-                print("num : "+str(num))
-                print("ite : "+str(ite))
                 if ite == int(num):
-                    keyword += verb[i][itr][int(num)] 
-                    print(verb[i][itr][int(num)])
+                    keyword.append(verb[i][itr][int(num)])
+                    print("Keyword :"+str(i)) 
+                    print(keyword)
+                    check = True
+                    break
                 else:
-                    print("error")
+                    if check == bool(check):
+                        print("error")
                 
                     
 
         else:
-            keyword += verb[i]
+            keyword.append(verb[i][itr])
+            print(keyword)
 
 
     print("Keyword "+str(i)+":")
-    print(keyword[i])
+    print(keyword)
 
 print(keyword)
 
@@ -196,37 +201,3 @@ print(keyword)
 
 
 
-
-
-    # if arr_cutting[i][10] != 5.0 and arr_cutting[i][10] != 3.0 and arr_cutting[i][10] != 2.0:
-    #     if arr_cutting[i]
-    # #     print(str(i)+":")
-    # #     print(arr_cutting[i])
-# print(arr_cutting[0][4][0][1])
-# print(str(len(account_payable))+" ID[0]: "+account_payable[0]['id'])
-# print("arr 189: ")
-# print(arr_cutting[189])
-# print("record 189: ")
-# print(record_item[189])
-        
-
-# print(record_item[0]['id'])
-
-
-
-# cnx = mysql.connector.connect(user='root', password='keep1234',host='192.168.99.100:3306',database='keeplearning')
-
-# cursor = cnx.cursor()
-
-# query = ("SELECT IncomeTaxAssessable"
-#         "FROM IncomAssessable"
-#         "WHERE IncomeTaxAssessable = %s")
-
-
-# cursor.execute(query)
-
-# print(cursor)
-
-
-# cursor.close()
-# cnx.close()
